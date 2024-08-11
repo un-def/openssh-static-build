@@ -30,7 +30,7 @@ clean-tarball:
 @run port='2222':
   '{{run_script}}' {{port}} '{{prefix}}'
 
-@pack: clean-tarball
+@pack-sshd:
   tar -czf sshd-static.tar.gz -C '{{prefix}}' \
     sbin/sshd \
     libexec/sshd-session \
