@@ -27,7 +27,7 @@ clean-prefix:
 clean-tarball:
   rm -f *.tar.gz
 
-@run port='2222':
+@run-sshd port='2222':
   '{{run_script}}' {{port}} '{{prefix}}'
 
 @pack-sshd:
