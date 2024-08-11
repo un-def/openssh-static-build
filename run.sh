@@ -7,8 +7,8 @@ if [ ${#} -lt 1 ]; then
 fi
 
 port=${1}
-prefix=${2:-.}
 
+prefix=${2:-.}
 case ${prefix} in
     /*)
         ;;
@@ -22,12 +22,15 @@ case ${prefix} in
         prefix=$(pwd)/${prefix}
 esac
 
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
+
 echo "prefix=${prefix}"
+echo "runtime_dir=${runtime_dir}"
 
 exec "${prefix}/sbin/sshd" \
     -f "${prefix}/etc/sshd_config" \
     -h "${prefix}/etc/ssh_host_ed25519_key" \
     -o SshdSessionPath="${prefix}/libexec/sshd-session" \
-    -o PidFile="${XDG_RUNTIME_DIR}/sshd-static.pid" \
+    -o PidFile="${runtime_dir}/sshd-static.pid" \
     -E /dev/stderr \
     -D -p "${port}"
