@@ -3,7 +3,7 @@ work_dir := root / 'workdir'
 build_dir := work_dir / 'build'
 prefix := work_dir / 'prefix'
 build_script := root / 'build.sh'
-run_script := root / 'run.sh'
+run_sshd_script := root / 'run-sshd.sh'
 
 @_list:
   just --list --unsorted
@@ -28,7 +28,7 @@ clean-tarball:
   rm -f *.tar.gz
 
 @run-sshd port='2222':
-  '{{run_script}}' {{port}} '{{prefix}}'
+  '{{run_sshd_script}}' {{port}} '{{prefix}}'
 
 @pack-sshd:
   tar -czf sshd-static.tar.gz -C '{{prefix}}' \
@@ -36,4 +36,4 @@ clean-tarball:
     libexec/sshd-session \
     etc/sshd_config \
     etc/ssh_host_ed25519_key \
-    "$(realpath -s --relative-to '{{prefix}}' '{{run_script}}')"
+    "$(realpath -s --relative-to '{{prefix}}' '{{run_sshd_script}}')"
