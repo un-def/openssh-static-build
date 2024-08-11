@@ -105,9 +105,8 @@ if [ "$(id -u)" -eq 0 ]; then
     host_gid=${2}
     username=nonroot
     create_user "${host_uid}" "${host_gid}" "${username}"
-
-    print_header '(as non-root)'
     su "${username}" -c "${0}"
 else
+    print_header '(as non-root)'
     build
 fi
